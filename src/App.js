@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+
+
+import { wineData } from './data/data.js';
+import { createGamma } from './helper/utilityFunctions.js';
+
+import StatsTable from './components/StatsTable.jsx';
+import { useMemo, useState } from 'react';
 
 function App() {
+  //stored  data in state variable so that any time it changes it will trigger a re-render. 
+  const [data, setData] = useState(wineData);
+
+  //only calls createGamma when on component mount or data state is changed
+  useMemo(() => createGamma(data, "Gamma"), [data]);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* created a stats table component which is responsoble for calculating stats on any property */}
+      <StatsTable attribute={"Flavanoids"} data={data} />
+      <StatsTable attribute={"Gamma"} data={data} />
+
     </div>
   );
 }
