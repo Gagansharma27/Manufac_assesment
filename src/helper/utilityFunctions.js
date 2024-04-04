@@ -77,6 +77,6 @@ export const mode = (arr, property) => {
 // this fucntion is creating the gamma property in our dataset. 
 export function createGamma(data, attributeName) {
     data.forEach(point => {
-        point[attributeName] = ((point.Ash * point.Hue) / point.Magnesium).toFixed(2);
+        point[attributeName] = ((parseFloat(point.Ash) * parseFloat(point.Hue)) / parseFloat(point.Magnesium)).toFixed(2);
     });
 }
