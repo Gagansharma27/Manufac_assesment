@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { groupByAlcoholType, mean, median, mode } from '../helper/utilityFunctions.js';
 import '../styles/statsTable.css';
 
@@ -9,27 +9,11 @@ function StatsTable({ attribute, data }) {
     // grouped alcohol by types (this will help whenever more alcohol type is added)
     const groupedByAlcohol = groupByAlcoholType(data);
 
-    // function is only called when component mounts or data state is changed
-    const calculatedMean = useMemo(() => {
-        const arr = [];
-        Object.keys(groupedByAlcohol).map(key => arr.push(mean(groupedByAlcohol[key], attribute)))
-        return arr;
-    }, [data]);
 
-
-    // function is only called when component mounts or data state is changed
-    const calculateMode = useMemo(() => {
-        const arr = [];
-        Object.keys(groupedByAlcohol).map(key => arr.push(mode(groupedByAlcohol[key], attribute)))
-        return arr;
-    }, [data]);
-
-    // function is only called when component mounts or data state is changed
-    const calculateMedian = useMemo(() => {
-        const arr = [];
-        Object.keys(groupedByAlcohol).map(key => arr.push(median(groupedByAlcohol[key], attribute)))
-        return arr;
-    }, [data]);
+    //these array holds class wise calculated mean median and mode
+    const calculatedMean = Object.keys(groupedByAlcohol).map(key => (mean(groupedByAlcohol[key], attribute)))
+    const calculateMode = Object.keys(groupedByAlcohol).map(key => (mode(groupedByAlcohol[key], attribute)))
+    const calculateMedian = Object.keys(groupedByAlcohol).map(key => (median(groupedByAlcohol[key], attribute)))
 
 
 

@@ -22,7 +22,7 @@ export const mean = (arrByAlcoholType, property) => {
     }
 
     const meanValue = sum / arrByAlcoholType.length;
-    return parseFloat(meanValue.toFixed(3));
+    return parseFloat(meanValue).toFixed(3);
 }
 //calculating median -> this function accepts two parameters, 1- array grouped by alcohol type, 2 - propperty on which we want to calculate
 export const median = (arr, property) => {
@@ -54,7 +54,7 @@ export const mode = (arr, property) => {
     let modes = [];
 
     arr.forEach(function (item) {
-        const value = item[property];
+        const value = parseFloat(item[property]).toFixed(3);
         if (!modeMap[value]) modeMap[value] = 0;
         modeMap[value]++;
         if (modeMap[value] > maxCount) {
@@ -76,7 +76,8 @@ export const mode = (arr, property) => {
 
 // this fucntion is creating the gamma property in our dataset. 
 export function createGamma(data, attributeName) {
-    data.forEach(point => {
-        point[attributeName] = ((parseFloat(point.Ash) * parseFloat(point.Hue)) / parseFloat(point.Magnesium)).toFixed(2);
-    });
+    return data.map(point => ({
+        ...point,
+        [attributeName]: ((parseFloat(point.Ash) * parseFloat(point.Hue)) / parseFloat(point.Magnesium)).toFixed(2)
+    }));
 }
